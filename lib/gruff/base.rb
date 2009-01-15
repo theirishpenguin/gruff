@@ -79,7 +79,7 @@ module Gruff
     # Manually set increment of the horizontal marking lines
     attr_accessor :y_axis_increment
 
-    # Height of staggering between labels
+    # Height of staggering between labels (Bar graph only)
     attr_accessor :label_stagger_height
 
     # Truncates labels if longer than max specified
@@ -869,7 +869,8 @@ module Gruff
 
           if @label_truncation_style == :trailing_dots
             if @label_max_size > 3
-              label_text = "#{label_text.first(@label_max_size)}..."
+              # 4 because '...' takes up 3 chars
+              label_text = "#{label_text[0 .. (@label_max_size - 4)]}..."
             end
           else # @label_truncation_style is :absolute (default)
             label_text = label_text[0 .. (@label_max_size - 1)]
